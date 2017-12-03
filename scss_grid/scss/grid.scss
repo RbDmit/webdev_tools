@@ -1,0 +1,105 @@
+// CONFIG
+$xl-width: 1170px;
+$lg-width: 992px;
+$md-width: 768px;
+$sm-width: 576px;
+
+$GENERAE_CLASSES : false;
+
+
+//
+//$width : 992px;
+$col-gap : 30px;
+$col-count: 12;
+
+
+// CALCULATIONS
+$col-margin : $col-gap / 2;
+
+// MIXINS
+@mixin col($col-span){
+    box-sizing: border-box;
+    width: calc(#{$col-span} * 100% / #{$col-count} - #{$col-gap});
+    margin: 0 $col-margin;
+}
+@mixin col-sm-($col-span){
+    @media screen and (min-width: $sm-width){
+        width: calc(#{$col-span} * 100% / #{$col-count} - #{$col-gap});
+    }
+}
+@mixin col-md-($col-span){
+    @media screen and (min-width: $md-width){
+        width: calc(#{$col-span} * 100% / #{$col-count} - #{$col-gap});
+    }
+}
+@mixin col-lg-($col-span){
+    @media screen and (min-width: $lg-width){
+        width: calc(#{$col-span} * 100% / #{$col-count} - #{$col-gap});
+    }
+}
+@mixin col-xl-($col-span){
+    @media screen and (min-width: $xl-width){
+        width: calc(#{$col-span} * 100% / #{$col-count} - #{$col-gap});
+    }
+}
+
+@mixin container-float(){
+    display:block;
+    padding: 0;
+    margin: 0 -1*$col-margin;
+
+    & > * {
+        float:left;
+        display:block;
+    }
+    &::after{
+        display:table;
+        content: '';
+        clear:both;
+    }
+}
+@mixin container-flex($direction){
+    padding: 0;
+    margin: 0 -1*$col-margin;
+    display:flex;
+    flex-direction: $direction;
+    align-items: stretch;
+    flex-wrap: wrap;
+}
+
+// CLASS GENERATION
+@if $GENERAE_CLASSES{
+    .container-float{
+        @include container-float();
+    }
+    .container-flex-row{
+        @include container-flex(row);
+    }
+    .container-flex-row-reverse{
+        @include container-flex(row-reverse);
+    }
+    .container-flex-column{
+        @include container-flex(column);
+    }
+    .container-flex-column-reverse{
+        @include container-flex(column-reverse);
+    }
+
+    @for $i from 0 to $col-count + 1 {
+        .col-#{$i} {
+            @include col(#{$i});
+        }
+        .col-sm-#{$i} {
+            @include col-sm-(#{$i});
+        }
+        .col-md-#{$i} {
+            @include col-md-(#{$i});
+        }
+        .col-lg-#{$i} {
+            @include col-lg-(#{$i});
+        }
+        .col-#{$i} {
+            @include col-xl-(#{$i});
+        }
+    }
+}

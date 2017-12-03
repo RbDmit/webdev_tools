@@ -1,0 +1,19 @@
+
+
+@import "grid.scss";
+
+
+.block{
+    @include container-flex(row);
+    & > * {
+        @include col(12); 
+        @include col-sm-(6);
+        @include col-md-(4);
+        @include col-lg-(3);
+        @include col-xl-(2);
+        background: #ccc;
+        margin-top:20px;
+    }
+
+
+}
